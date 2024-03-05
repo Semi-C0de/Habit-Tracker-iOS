@@ -5,6 +5,16 @@
 //  Created by Lalith Shravan Guruprasad on 11/17/23.
 //
 
+// Choose a target:
+//
+// per day
+// per week
+// per month
+//
+// on track?
+// analytics
+// target streak
+
 import SwiftUI
 
 struct ContentView: View {
@@ -22,7 +32,7 @@ struct ContentView: View {
                 Section {
                     TextField("Habit Name", text: $habitName)
                     Button("Add", action: {
-                        let habit = dataManager.addHabit(name: habitName, notes: "")
+                        _ = dataManager.addHabit(name: habitName, notes: "")
                         self.habitName = ""
                     })
                 }

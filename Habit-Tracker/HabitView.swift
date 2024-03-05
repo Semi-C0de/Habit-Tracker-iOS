@@ -10,7 +10,7 @@ import SwiftUI
 struct HabitView: View {
 
     @ObservedObject var dataManager:DataManager
-    let index:Int
+    let habit:Habit
     @State var completionDateSelector:Date = Date.now
     
     
@@ -18,7 +18,7 @@ struct HabitView: View {
     init(habit:Habit, dataManager:DataManager) {
 
         self.dataManager = dataManager
-        self.index = dataManager.habits.firstIndex(of: habit) ?? 0
+        self.habit = habit
         
     }
     
@@ -27,24 +27,24 @@ struct HabitView: View {
         List {
             
             Section {
-                Text("Target: ")
+                Text("Target: \(habit.target)")
             }
             
             Section {
                 DatePicker("Date", selection: $completionDateSelector, in: ...Date.now)
                 
                 Button("Add"){
-                    let completion = dataManager.addCompletion(date: completionDateSelector, habit: dataManager.habits[self.index])
+                    _ = dataManager.addCompletion(date: completionDateSelector, habit: habit)
                 }
             }
             
             Section {
-                ForEach(dataManager.habits[self.index].completionsArray, id: \.id){completion in
+                ForEach(habit.completionsArray, id: \.id){completion in
                     Text(completion.date?.formatted() ?? "NA")
                 }
             }
         }
-        .navigationTitle(dataManager.habits[index].name ?? "NA")
+        .navigationTitle(habit.name ?? "NA")
         
     }
 }
